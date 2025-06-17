@@ -3,9 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
-
-# Sample customer purchase history dataset
-# (e.g. total purchases and frequency of visit)
 data = {
     'CustomerID': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     'TotalPurchase': [200, 150, 300, 800, 1200, 50, 100, 1800, 750, 400],
@@ -13,22 +10,12 @@ data = {
 }
 
 df = pd.DataFrame(data)
-
-# Select features for clustering
 X = df[['TotalPurchase', 'VisitsPerMonth']]
-
-# Optional: Normalize the features
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
-
-# Apply KMeans clustering
 kmeans = KMeans(n_clusters=3, random_state=0)
 df['Cluster'] = kmeans.fit_predict(X_scaled)
-
-# Print cluster assignments
 print(df[['CustomerID', 'TotalPurchase', 'VisitsPerMonth', 'Cluster']])
-
-# Visualize the clusters
 plt.figure(figsize=(8, 5))
 plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=df['Cluster'], cmap='viridis', s=100)
 plt.xlabel('Total Purchase (scaled)')
